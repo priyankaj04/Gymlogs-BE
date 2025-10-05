@@ -1,0 +1,43 @@
+{
+  "name": "gymlog-be",
+  "version": "1.0.0",
+  "description": "A complete Node.js and Express application for gym logging with Supabase database integration, featuring CRUD operations, authentication, and comprehensive API endpoints.",
+  "license": "MIT",
+  "author": "Priyanka J",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "echo \"Linting not configured yet\"",
+    "setup": "echo \"Please copy .env.example to .env and update the values\""
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "supabase",
+    "crud",
+    "api",
+    "gym",
+    "fitness",
+    "logging",
+    "jwt",
+    "authentication"
+  ],
+  "dependencies": {
+    "@supabase/supabase-js": "^2.58.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
