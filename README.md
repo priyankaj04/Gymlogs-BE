@@ -44,7 +44,12 @@ A complete Node.js and Express application for gym logging with Supabase databas
    ```
 
 3. **Set up Supabase tables:**
-   Run the following SQL in your Supabase SQL editor:
+   Run the SQL files in your Supabase SQL editor:
+   - `database/schema.sql` - Core tables (users, gym_logs)
+   - `database/exercise.sql` - Exercise catalog
+   - `database/workout-plans.sql` - Workout plan system
+   
+   Or run the following core SQL:
    ```sql
    -- Users table
    CREATE TABLE users (
@@ -95,6 +100,16 @@ A complete Node.js and Express application for gym logging with Supabase databas
 - `PUT /api/users/:id` - Update user
 - `DELETE /api/users/:id` - Delete user
 
+### Exercises (Protected)
+- `POST /api/exercises` - Create new exercise
+- `GET /api/exercises` - Get all exercises (with filters/pagination)
+- `GET /api/exercises/constants` - Get exercise constants
+- `GET /api/exercises/filters` - Get available filter values
+- `GET /api/exercises/stats` - Get exercise statistics
+- `GET /api/exercises/by-body-part` - Group exercises by body part
+- `GET /api/exercises/:id` - Get exercise by ID
+- `PUT /api/exercises/:id` - Update exercise
+
 ### Gym Logs (Protected)
 - `POST /api/gym-logs` - Create new gym log
 - `GET /api/gym-logs` - Get all gym logs (with pagination and filters)
@@ -102,6 +117,17 @@ A complete Node.js and Express application for gym logging with Supabase databas
 - `PUT /api/gym-logs/:id` - Update gym log
 - `DELETE /api/gym-logs/:id` - Delete gym log
 - `GET /api/gym-logs/stats/:user_id` - Get user statistics
+
+### Workout Plans (Protected)
+- `POST /api/workout-plans` - Create new workout plan with exercises
+- `GET /api/workout-plans` - Get all workout plans (own + public)
+- `GET /api/workout-plans/stats` - Get workout plan statistics
+- `GET /api/workout-plans/:id` - Get workout plan with exercises
+- `PUT /api/workout-plans/:id` - Update workout plan
+- `DELETE /api/workout-plans/:id` - Delete workout plan
+- `POST /api/workout-plans/:planId/exercises` - Add exercise to plan
+- `PUT /api/workout-plans/:planId/exercises/:exerciseId` - Update exercise in plan
+- `DELETE /api/workout-plans/:planId/exercises/:exerciseId` - Remove exercise from plan
 
 ### Health Check
 - `GET /health` - Server health check
@@ -171,11 +197,26 @@ curl -X POST http://localhost:3000/api/gym-logs \
 ```
 src/
 ├── config/          # Database and configuration files
+├── constants/       # Application constants (exercise types, body parts, etc.)
 ├── controllers/     # Route controllers
+│   ├── userController.js
+│   ├── gymLogController.js
+│   ├── exerciseController.js
+│   └── workoutPlanController.js
 ├── middleware/      # Custom middleware functions
 ├── routes/          # API route definitions
 ├── utils/           # Utility functions and helpers
 └── index.js         # Main application entry point
+
+database/
+├── schema.sql       # Core database schema
+├── exercise.sql     # Exercise catalog schema
+└── workout-plans.sql # Workout plan system schema
+
+docs/
+├── exercise-api.md          # Exercise API documentation
+├── exercise-constants.md    # Constants documentation
+└── workout-plan-api.md      # Workout Plan API documentation
 ```
 
 ## Development Scripts

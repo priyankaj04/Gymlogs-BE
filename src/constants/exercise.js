@@ -2,24 +2,37 @@
 // These constants define the valid values for exercise properties
 
 const BODY_PARTS = [
-  'chest',
-  'back', 
-  'shoulders',
-  'biceps',
-  'triceps',
-  'legs',
-  'glutes',
-  'core',
-  'calves',
-  'forearms',
-  'full-body'
+  "all",
+    "chest",
+    "lowerback",
+    "back",
+    "shoulders",
+    "upperabs",
+    "sideabs",
+    "biceps",
+    "triceps",
+    "legs",
+    "middlequads",
+    "innerquads",
+    "hamstrings",
+    "glutes",
+    "core",
+    "calves",
+    "frontcalves",
+    "forearms",
+    "lats",
+    "traps",
+    "reardelts",
+    "full-body",
 ];
 
 const EXERCISE_TYPES = [
   'cardio',
   'compound',
   'isolated',
-  'mobility'
+  'mobility',
+  'calisthenics',
+  'endurance'
 ];
 
 const DIFFICULTY_LEVELS = [

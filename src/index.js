@@ -12,6 +12,7 @@ const { validateEnv } = require('./utils/validation');
 const userRoutes = require('./routes/userRoutes');
 const gymLogRoutes = require('./routes/gymLogRoutes');
 const exerciseRoutes = require('./routes/exercise');
+const workoutPlanRoutes = require('./routes/workoutPlanRoutes');
 
 // Validate environment variables
 validateEnv();
@@ -53,6 +54,7 @@ app.get('/health', (req, res) => {
 app.use('/api/users', userRoutes);
 app.use('/api/gym-logs', gymLogRoutes);
 app.use('/api/exercises', exerciseRoutes);
+app.use('/api/workout-plans', workoutPlanRoutes);
 
 // 404 handler
 app.use(notFound);

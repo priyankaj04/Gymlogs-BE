@@ -56,6 +56,46 @@ const exerciseUpdateSchema = Joi.object({
   equipment: Joi.array().items(Joi.string())
 }).min(1);
 
+// Workout Plan validation schemas
+const workoutPlanExerciseSchema = Joi.object({
+  exercise_id: Joi.string().required(),
+  sets: Joi.number().integer().min(1).max(50).required(),
+  reps: Joi.number().integer().min(1).max(1000).required(),
+  weight: Joi.number().min(0).max(10000).optional(),
+  rest_time: Joi.number().integer().min(0).max(3600).optional(), // max 1 hour rest
+  notes: Joi.string().max(500).allow('').optional(),
+  order_index: Joi.number().integer().min(1).optional()
+});
+
+const workoutPlanSchema = Joi.object({
+  name: Joi.string().min(2).max(255).required(),
+  description: Joi.string().max(2000).allow('').optional(),
+  muscle_types: Joi.array().items(Joi.string().valid(...BODY_PARTS)).min(1).required(),
+  difficulty_level: Joi.string().valid(...DIFFICULTY_LEVELS).optional(),
+  estimated_duration: Joi.number().integer().min(5).max(300).optional(), // 5 minutes to 5 hours
+  is_public: Joi.boolean().default(false),
+  exercises: Joi.array().items(workoutPlanExerciseSchema).min(1).required()
+});
+
+const workoutPlanUpdateSchema = Joi.object({
+  name: Joi.string().min(2).max(255),
+  description: Joi.string().max(2000).allow(''),
+  muscle_types: Joi.array().items(Joi.string().valid(...BODY_PARTS)).min(1),
+  difficulty_level: Joi.string().valid(...DIFFICULTY_LEVELS),
+  estimated_duration: Joi.number().integer().min(5).max(300),
+  is_public: Joi.boolean(),
+  exercises: Joi.array().items(workoutPlanExerciseSchema).min(1)
+}).min(1);
+
+const workoutPlanExerciseUpdateSchema = Joi.object({
+  sets: Joi.number().integer().min(1).max(50),
+  reps: Joi.number().integer().min(1).max(1000),
+  weight: Joi.number().min(0).max(10000),
+  rest_time: Joi.number().integer().min(0).max(3600),
+  notes: Joi.string().max(500).allow(''),
+  order_index: Joi.number().integer().min(1)
+}).min(1);
+
 // Validation middleware functions
 const validateUser = (req, res, next) => {
   const { error } = userSchema.validate(req.body);
@@ -141,6 +181,42 @@ const validateExerciseUpdate = (req, res, next) => {
   next();
 };
 
+const validateWorkoutPlan = (req, res, next) => {
+  const { error } = workoutPlanSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation error',
+      details: error.details.map(detail => detail.message)
+    });
+  }
+  next();
+};
+
+const validateWorkoutPlanUpdate = (req, res, next) => {
+  const { error } = workoutPlanUpdateSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation error',
+      details: error.details.map(detail => detail.message)
+    });
+  }
+  next();
+};
+
+const validateWorkoutPlanExerciseUpdate = (req, res, next) => {
+  const { error } = workoutPlanExerciseUpdateSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation error',
+      details: error.details.map(detail => detail.message)
+    });
+  }
+  next();
+};
+
 module.exports = {
   validateUser,
   validateUserUpdate,
@@ -148,5 +224,8 @@ module.exports = {
   validateGymLog,
   validateGymLogUpdate,
   validateExercise,
-  validateExerciseUpdate
+  validateExerciseUpdate,
+  validateWorkoutPlan,
+  validateWorkoutPlanUpdate,
+  validateWorkoutPlanExerciseUpdate
 };
